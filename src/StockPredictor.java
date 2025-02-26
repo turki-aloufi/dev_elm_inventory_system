@@ -8,12 +8,12 @@ class StockPredictor {
 
     public static String suggestRestocking(Product product, double averageDailySales) {
         int daysUntilStockOut = predictStockOutDays(product, averageDailySales);
-        if (daysUntilStockOut <= 5) {
-            return "Urgent restocking needed immediately!";
-        } else if (daysUntilStockOut <= 10) {
-            return "Consider placing a restocking order soon.";
+        if (daysUntilStockOut <= 3) {
+            return "Urgent: Restock immediately!";
+        } else if (daysUntilStockOut <= 7) {
+            return "Moderate: Consider restocking soon.";
         } else {
-            return "Stock levels are sufficient for now.";
+            return "Stock is sufficient for now.";
         }
     }
 }
