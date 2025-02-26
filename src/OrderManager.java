@@ -4,8 +4,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 class OrderManager {
-    private ExecutorService executorService = Executors.newFixedThreadPool(5);
-    private List<Order> orders = new ArrayList<>();
+     ExecutorService executorService = Executors.newFixedThreadPool(5);
+     List<Order> orders = new ArrayList<>();
 
     public void processOrder(Order order, Product product) {
 
@@ -38,4 +38,3 @@ class OrderManager {
         executorService.shutdown();
     }
 }
-
