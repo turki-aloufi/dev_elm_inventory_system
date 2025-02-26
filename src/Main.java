@@ -1,32 +1,42 @@
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
+// Main class to run the application
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        Product laptop = new Product("Laptop", 1200.0, 20, 5);
-        Product smartphone = new Product("Smartphone", 800.0, 10, 3);
+        System.out.print("Enter product name: ");
+        String productName = scanner.nextLine();
+        System.out.print("Enter product price: ");
+        double productPrice = scanner.nextDouble();
+        System.out.print("Enter initial stock level: ");
+        int stockLevel = scanner.nextInt();
+        System.out.print("Enter reorder threshold: ");
+        int reorderThreshold = scanner.nextInt();
 
-        System.out.print("Enter average daily sales for Laptop: ");
-        double laptopSales = scanner.nextDouble();
+        Product product = new Product(productName, productPrice, stockLevel, reorderThreshold);
+        OrderManager orderManager = new OrderManager();
 
-        System.out.print("Enter average daily sales for Smartphone: ");
-        double smartphoneSales = scanner.nextDouble();
+        orderManager.loadOrders();
 
-        displayProductDetails(laptop);
-        displayProductDetails(smartphone);
+        System.out.print("Enter average daily sales: ");
+        double dailySales = scanner.nextDouble();
 
-        System.out.println("Stock Prediction for Laptop:");
-        System.out.println("Days until stock out: " + StockPredictor.predictStockOutDays(laptop, laptopSales));
-        System.out.println("Restock Suggestion: " + StockPredictor.suggestRestocking(laptop, laptopSales));
+        displayProductDetails(product);
 
-        System.out.println("Stock Prediction for Smartphone:");
-        System.out.println("Days until stock out: " + StockPredictor.predictStockOutDays(smartphone, smartphoneSales));
-        System.out.println("Restock Suggestion: " + StockPredictor.suggestRestocking(smartphone, smartphoneSales));
+        System.out.println("Stock Prediction:");
+        System.out.println("Days until stock out: " + StockPredictor.predictStockOutDays(product, dailySales));
+        System.out.println("Restock Suggestion: " + StockPredictor.suggestRestocking(product, dailySales));
+
+        Order order = new Order("Alice", product.getProductId(), 2);
+        orderManager.processOrder(order, product);
+        orderManager.shutdown();
     }
 
+    // Display product details in the console
     private static void displayProductDetails(Product product) {
         System.out.println("Product ID: " + product.getProductId());
         System.out.println("Name: " + product.getName());
