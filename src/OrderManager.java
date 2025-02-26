@@ -4,11 +4,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 class OrderManager {
-     ExecutorService executorService = Executors.newFixedThreadPool(5);
-     List<Order> orders = new ArrayList<>();
+    private ExecutorService executorService = Executors.newFixedThreadPool(5);
+    private List<Order> orders = new ArrayList<>();
 
     public void processOrder(Order order, Product product) {
-
         product.reduceStock(order.getQuantity());
         orders.add(order);
         System.out.println("Processing order: " + order.getOrderId());
@@ -38,3 +37,4 @@ class OrderManager {
         executorService.shutdown();
     }
 }
+
